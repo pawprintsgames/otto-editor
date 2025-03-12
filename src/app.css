@@ -1,0 +1,86 @@
+
+:root {
+  color-scheme: light dark;
+ --background: light-dark(#eee, #0D204D);
+ --border: light-dark(#ccc, #888);
+ --border-shadow: light-dark(#bbb, #999);
+ --text-main: light-dark(#555, white);
+ --text-muted: light-dark(grey, lightgrey);
+ --text-bright: light-dark(black, white);
+ --selection: light-dark(#CD48A9, #D769B5);
+ --background-alt: light-dark(#DDA743, #E45D29);
+ 
+ --font-size-small: 14px;
+ 
+}
+
+body {
+  background:  var(--background);
+  font-family: monospace;
+  color: var(--text-main);
+  line-height: 1.6em;
+}
+
+input[type="text"], input[type="number"] {
+  color: var(--text-main);
+  border: 2px solid var(--border);
+  padding: 8px;
+  margin-top: 4px;
+  font-family: monospace;
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
+}
+
+button, a.button {
+  font-family: monospace;
+  user-select: none;
+  margin: 2px 0;
+
+  background: var(--border);
+  color: var(--text-main);
+  padding: 4px 20px;
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 15px, calc(100% - 15px) 0);
+  border: none;
+
+  &:active {
+    background: var(--background-alt);
+  }
+  &.active {
+    background: var(--background-alt);
+  }
+  &[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  &.fullwidth {
+		display: block;
+		width: 200px;
+		margin-top: 20px;
+		margin-left: auto;
+    padding: 10px 20px;
+	}
+
+}
+
+
+h3 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+* + h3 {
+  margin-top: 20px;
+}
+
+::file-selector-button {
+  border: 2px solid var(--border);
+  padding: 4px 20px;
+}
+
+
+dialog::backdrop {
+  background: var(--background);
+  opacity: 0.8;
+}
