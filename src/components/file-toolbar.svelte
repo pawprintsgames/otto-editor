@@ -131,8 +131,10 @@
 
 <ToolbarWrapper className="file-toolbar">
 	<div class="editor-title">
-		<img src="otto.png" class="otto-icon" alt="" />
-		Otto Editor
+		<a href="https://pawprints.itch.io/otto-editor" target="_blank">
+			<img src="otto.png" class="otto-icon" alt="" />
+			Otto Editor</a
+		>
 	</div>
 
 	<div class="toolbar-menu-item">
@@ -386,8 +388,7 @@
 			<strong>Otto’s Galactic Groove!!</strong>
 		</p>
 		<p>
-			Use the <strong>File</strong> menu to create a new level or import an existing file, or read on
-			for helpful resources.
+			Use the <strong>File</strong> menu to create a new level or import an existing file.
 		</p>
 		<ul>
 			<li>
@@ -443,6 +444,16 @@
 		filter: opacity(0.8);
 		white-space: nowrap;
 		user-select: none;
+	}
+
+	.editor-title:hover {
+		filter: opacity(1);
+	}
+
+	.editor-title a,
+	.editor-title a:hover {
+		color: inherit;
+		text-decoration: none;
 	}
 
 	.otto-icon {
