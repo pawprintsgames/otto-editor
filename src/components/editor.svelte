@@ -254,6 +254,9 @@
 		if (document.activeElement !== document.body) {
 			return;
 		}
+
+		const cmdCtrl = event.metaKey || event.ctrlKey;
+
 		if (event.code === 'Space') {
 			event.preventDefault();
 			if (audio.paused) {
@@ -285,38 +288,38 @@
 			return false;
 		}
 
-		if (event.code === 'KeyC' && event.metaKey) {
+		if (event.code === 'KeyC' && cmdCtrl) {
 			pasteboard = JSON.parse(JSON.stringify(selectedNotes));
 			event.preventDefault();
 			return false;
 		}
-		if (event.code === 'KeyX' && event.metaKey) {
+		if (event.code === 'KeyX' && cmdCtrl) {
 			pasteboard = JSON.parse(JSON.stringify(selectedNotes));
 			$notes = $notes.filter((note) => !selectedNotes.includes(note));
 			event.preventDefault();
 			return false;
 		}
-		if (event.code === 'KeyV' && event.metaKey) {
+		if (event.code === 'KeyV' && cmdCtrl) {
 			$notes = [...$notes, ...pasteboard];
 			selectedNotes = pasteboard;
 			$notes.sort((a, b) => a.beat - b.beat);
 			event.preventDefault();
 			return false;
 		}
-		if (event.code === 'KeyA' && event.metaKey) {
+		if (event.code === 'KeyA' && cmdCtrl) {
 			selectedNotes = $notes;
 			event.preventDefault();
 			return false;
 		}
 		if (
-			(event.code === 'KeyZ' && event.metaKey && event.shiftKey) ||
-			(event.code === 'KeyY' && event.metaKey)
+			(event.code === 'KeyZ' && cmdCtrl && event.shiftKey) ||
+			(event.code === 'KeyY' && cmdCtrl)
 		) {
 			notes.redo();
 			event.preventDefault();
 			return false;
 		}
-		if (event.code === 'KeyZ' && event.metaKey) {
+		if (event.code === 'KeyZ' && cmdCtrl) {
 			notes.undo();
 			event.preventDefault();
 			return false;

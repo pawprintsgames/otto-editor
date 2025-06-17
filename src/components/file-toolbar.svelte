@@ -91,37 +91,6 @@
 	let audioSelectOpen = false;
 	let exportPackageOpen = false;
 
-	async function loadDebugFile() {
-		const file: Song = {
-			gameVersion: LATEST_GAME_VERSION,
-			name: 'test',
-			'file-editor': 'Blue_Slushie_-_Full.wav',
-			file: '',
-			'file-no-melody': '',
-			'beats-per-minute': 160,
-			length: 0,
-			difficulty: {
-				easy: {
-					notes: [],
-					intensity: 1
-				},
-				hard: {
-					notes: [],
-					intensity: 1
-				},
-				'very-hard': {
-					notes: [],
-					intensity: 1
-				}
-			}
-		};
-		const blob = await (await fetch(file['file-editor'])).blob();
-		dispatch('fileChange', {
-			fileData: file,
-			audioFileURL: URL.createObjectURL(blob)
-		});
-	}
-
 	const difficultyLookup = {
 		easy: 'Casual',
 		hard: 'Hard',
@@ -411,10 +380,6 @@
 			</li>
 		</ul>
 	</div>
-{/if}
-
-{#if !songLoaded && globalThis?.location?.origin.includes('local')}
-	<button on:click={loadDebugFile} style="height: 30vh;">Quick Debug</button>
 {/if}
 
 <style>
