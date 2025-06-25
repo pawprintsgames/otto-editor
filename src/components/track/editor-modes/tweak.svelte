@@ -38,12 +38,13 @@
 		clientY: number;
 	}
 
-	let selectedNote: Note | null = $state(null);
+	let selectedNoteIndex = $state(-1);
+	let selectedNote = $derived($notes[selectedNoteIndex] || null);
 	let stepIndex: number | null = $state(null);
 	let stepModified = $state(false);
 	function onStepMouseDown(noteIndex: number, _stepIndex: number) {
 		return function () {
-			selectedNote = $notes[noteIndex];
+			selectedNoteIndex = noteIndex;
 			stepIndex = _stepIndex;
 		};
 	}
@@ -51,6 +52,7 @@
 		if (!event || !cursorDown || !selectedNote || stepIndex === null || !selectedNote.steps) {
 			return;
 		}
+
 		// move step
 		const { beat, y } = pxToData(event.original.layerX, event.original.layerY);
 
@@ -73,11 +75,11 @@
 		selectedNote.steps.sort((a, b) => a.beat - b.beat);
 		stepIndex = selectedNote.steps.indexOf(step);
 		selectedNote.length = (selectedNote.steps || []).at(-1)?.beat || 0;
-		$notes = $notes;
+		$notes[selectedNoteIndex] = selectedNote;
 	}
 	function onMouseDownNote(event: { noteIndex: number; original: MouseEvent }) {
 		const { beat, y } = pxToData(event.original.layerX, event.original.layerY);
-		selectedNote = $notes[event.noteIndex] as Note;
+		selectedNoteIndex = event.noteIndex;
 		if (!selectedNote.steps) {
 			selectedNote.steps = [];
 		}
@@ -106,7 +108,7 @@
 				selectedNote.steps = selectedNote.steps?.filter((step, i) => i !== stepIndex);
 				$notes = $notes;
 			}
-			selectedNote = null;
+			selectedNoteIndex = -1;
 			stepIndex = null;
 			stepModified = false;
 		}
