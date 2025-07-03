@@ -150,12 +150,14 @@
 						<blockquote class="warning">{validDownload.error}</blockquote>
 					{/if}
 
-					{#if !fileWithMelody}
-						<p>
-							⚠️ Make sure you’ve set 'Audio file (with melody)' in the Metadata panel, or your song
-							will not work in the game.
-						</p>
-					{/if}
+					<button
+						on:click={() => {
+							exportPackageOpen = true;
+							setMenu(null);
+						}}
+					>
+						Download <code>.otto</code> bundle...
+					</button>
 
 					<a
 						role="button"
@@ -165,18 +167,6 @@
 					>
 						<button>Download a copy </button>
 					</a>
-
-					<button
-						on:click={() => {
-							exportPackageOpen = true;
-							setMenu(null);
-						}}
-						disabled
-					>
-						Download <code>.otto</code> bundle...
-						<span style="font-size: 80%; font-style: italic; margin-left: 10px;">(Coming soon)</span
-						>
-					</button>
 				{/if}
 			</div>
 		{/if}
@@ -212,32 +202,6 @@
 							Move notes with BPM
 						</label>
 					</div>
-					<br />
-					<div>
-						<label
-							><strong>Audio file (with melody)</strong>
-							<input type="text" bind:value={fileWithMelody} /></label
-						>
-						<p class="info">
-							The audio file that plays by default, e.g. 'My Song - Melody.wav'. Required.
-						</p>
-					</div>
-					<br />
-					<div>
-						<label
-							><strong>Audio file (no melody)</strong>
-							<input type="text" bind:value={fileNoMelody} /></label
-						>
-						<p class="info">
-							The audio file that plays when players miss notes, e.g. 'My Song - Accomp.wav' If not
-							set, the game will use a muffled version of the melody file instead.
-						</p>
-					</div>
-					{#if audioFileEditor}
-						<div>
-							<p>The name of the audio file being used for editing is '{audioFileEditor}'</p>
-						</div>
-					{/if}
 				</div>
 			{/if}
 		</div>

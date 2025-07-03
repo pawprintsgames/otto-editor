@@ -115,4 +115,8 @@
 	p {
 		margin: 10px 0;
 	}
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 </style>
