@@ -1,6 +1,7 @@
 <script lang="ts">
 	// https://github.com/Catsvilles/svelte-audio-waveform
 	import { onMount, beforeUpdate, afterUpdate } from 'svelte';
+	import canvasSize from 'canvas-size/dist/canvas-size.esm.js';
 
 	let canv: HTMLCanvasElement;
 	export let canvasWidth: number;
@@ -194,15 +195,30 @@
 		ctx.clearRect(0, 0, width, height);
 	};
 
+	let maxCanvasSize: number;
+	canvasSize.maxWidth().then(({ success, width }: { success: boolean; width: number }) => {
+		if (success) {
+			maxCanvasSize = width;
+		} else {
+			maxCanvasSize = 25_000;
+		}
+	});
+
 	const updateSize = (width: number, height: number, peaks: number[]) => {
 		if (peaks && canv) {
+			/**
+			 * If the canvas element is too large, it might crash and appear blank.
+			 * So we limit the maximum width, which may cause the waveform to appear blurry
+			 * on very high zoom levels (and/or long audio files)
+			 */
+			width = Math.min(width, maxCanvasSize);
+
 			const ctx = canv.getContext('2d') as CanvasRenderingContext2D;
 
-			const displayWidth = Math.round(width / pixelRatio);
 			const displayHeight = Math.round(height / pixelRatio);
 			ctx.canvas.width = width;
 			ctx.canvas.height = height;
-			ctx.canvas.style.width = `${displayWidth}px`;
+			ctx.canvas.style.width = `100%`;
 			ctx.canvas.style.height = `${displayHeight}px`;
 
 			clearWave(ctx, width, height);
@@ -218,7 +234,7 @@
 	});
 
 	beforeUpdate(() => {
-		if (canvasWidth) {
+		if (canvasWidth && maxCanvasSize) {
 			updateSize(canvasWidth, canvasHeight, peaks);
 		}
 	});

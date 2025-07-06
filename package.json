@@ -48,6 +48,7 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"canvas-size": "^2.0.0",
 		"fontawesome-free": "^1.0.4",
 		"joi": "^17.13.3",
 		"jszip": "^3.10.1",

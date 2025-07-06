@@ -473,7 +473,11 @@
 			</g>
 		</svg>
 
-		<div class="note-track" style:width={trackWidth * pixelRatio}>
+		<div
+			class="note-track"
+			style:width="{trackWidth / pixelRatio}px"
+			style:height="{trackHeight}px"
+		>
 			{#if audio}
 				<svg
 					class={`track ${cursorMode}`}
