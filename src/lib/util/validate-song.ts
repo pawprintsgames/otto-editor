@@ -6,12 +6,14 @@ const notesSchema = Joi.array().items(
 		beat: Joi.number().required(),
 		y: Joi.number().required(),
 		length: Joi.number(),
-		steps: Joi.array().items(
-			Joi.object({
-				beat: Joi.number().required(),
-				y: Joi.number().required()
-			})
-		)
+		steps: Joi.array()
+			.items(
+				Joi.object({
+					beat: Joi.number().required(),
+					y: Joi.number().required()
+				})
+			)
+			.min(2)
 	})
 );
 const intensitySchema = Joi.number().required().min(1).max(3);
@@ -79,9 +81,13 @@ function fixSong(songFile: any) {
 			note.steps = note.steps?.filter((step) => {
 				step.beat === null || step.y === null;
 			});
+			if (note.steps && note.steps.length < 2) {
+				delete note.steps;
+			}
 		});
 		song.difficulty[diffName as keyof Song['difficulty']].notes = newNotes;
 	});
+
 	return song;
 }
 
